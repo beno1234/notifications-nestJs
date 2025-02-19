@@ -2,9 +2,9 @@
 /* eslint-disable @typescript-eslint/require-await */
 /* eslint-disable prettier/prettier */
 import { Body, Controller, Get, Post } from '@nestjs/common';
-import { PrismaService } from './prisma.service';
+import { PrismaService } from './infra/prisma.service';
 import { randomUUID } from 'node:crypto'
-import { CreateNewNotifications } from './create-notifications-body';
+import { CreateNotificationBody } from './infra/create-notifications-body';
 // serve para roteamento tambem
 @Controller('notifications')
 export class AppController {
@@ -16,7 +16,7 @@ export class AppController {
   }
 
   @Post()
-  async create(@Body() body: CreateNewNotifications) {
+  async create(@Body() body: CreateNotificationBody) {
     const {recipientId, content, category} = body;
     await this.prisma.notification.create({
       data: {
